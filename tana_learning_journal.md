@@ -104,3 +104,47 @@ Info from ruby-doc.org
 * **Private vs protected methods** Private methods can never be called with an explicit receiver (ie, self.private_method).  They can be called with 'self' as an implicit receiver, by the class that the private method was defined on or any of its subclasses (ie, call without `self.`).  
 Protected methods can be called with an explicit receiver, but only by the class they are defined on or its subclasses (ie, can call with or without `self.`)
   > Source: http://www.skorks.com/2010/04/ruby-access-control-are-private-and-protected-methods-only-a-guideline/ and http://weblog.jamisbuck.org/2007/2/23/method-visibility-in-ruby
+
+
+-------------------------
+
+## 20-01-2017 RVM: re terminal and bash
+
+**Current issue: "PATH is not properly set up" / "RVM is not a function"**
+
+* Error message:
+
+```
+Warning! PATH is not properly set up, '/home/tanaryder/.rvm/gems/ruby-2.3.1/bin' is not at first place,
+         usually this is caused by shell initialization files - check them for 'PATH=...' entries,
+         it might also help to re-add RVM to your dotfiles: 'rvm get stable --auto-dotfiles',
+         to fix temporarily in this shell session run: 'rvm use ruby-2.3.1'.
+
+RVM is not a function, selecting rubies with 'rvm use ...' will not work.
+
+You need to change your terminal emulator preferences to allow login shell.
+Sometimes it is required to use `/bin/bash --login` as the command.
+Please visit https://rvm.io/integration/gnome-terminal/ for an example.
+```
+
+* Tried `rvm get stable --auto-dotfiles`: happily reloaded, but didn't fix the issue.
+
+
+* Have not tried `rvm reset` as it looks like it might be necessary to go through the full set-up process again. This may be the next step though.
+
+
+* RVM docs suggest that it may be related to a login shell (reads bash_profile) vs a non-login shell (just reads bashrc): https://rvm.io/support/faq#what-shell-login-means-bash-l
+
+
+* Tried adding '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"' (loading RVM as a function) as per http://stackoverflow.com/questions/18276701/getting-warning-path-is-not-properly-set-up-when-doing-rvm-use-2-0-0-defaul/18278735#18278735.  Also tried adding that to the bottom of zshrc.  No luck in changing $PATH.  
+
+
+-------------------------
+
+## 21-01-2017 Ruby version management :RVM vs rbenv vs chruby
+
+* **RVM:** Manages Ruby downloads, switching between Ruby versions, and gems & gemsets.  Apparently the most frustrating option but also the most used and also the most powerful.
+
+* **rbenv:** Manages switching between Ruby versions. Plugins handle Ruby installs and gem & gemset management.  Awesome overview of how it works by the guy who made it: http://stackoverflow.com/a/9422296
+
+* **chruby**: Manages switching between Ruby versions, nothing else. Commonly used with another application that handles Ruby downloading.  Nothing built in to handle gems/gemsets, but apparently Bundler can handle virtually all of that.
