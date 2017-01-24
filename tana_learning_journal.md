@@ -148,3 +148,41 @@ Please visit https://rvm.io/integration/gnome-terminal/ for an example.
 * **rbenv:** Manages switching between Ruby versions. Plugins handle Ruby installs and gem & gemset management.  Awesome overview of how it works by the guy who made it: http://stackoverflow.com/a/9422296
 
 * **chruby**: Manages switching between Ruby versions, nothing else. Commonly used with another application that handles Ruby downloading.  Nothing built in to handle gems/gemsets, but apparently Bundler can handle virtually all of that.
+
+
+-------------------------
+
+## 23-01-2017 Re-intro to Rails (5) (API mode)
+
+* To initialize a new API, just run `rails new app_name --api`.  Can also set the database to be postgres instead of allowing the initial setup with sqlite3 (the default) and then changing it afterwards: `rails new app_name --api --database=postgresql`.
+
+* API mode cuts out everything to do with the views, but keeps taking care of things in the middle (most middleware remains).
+
+
+## RSpec vs Minitest
+
+* Apparently, most testing frameworks can/should be able to do all the same things... (some make certain things easier or more streamlined)
+
+* Minitest comes by default with Rails. Technically, it just creates another Ruby class.
+
+* RSpec has a DSL.  Means that tests "read like English", but obfuscates the way the testing works (method visibility? can it go in a module? inheritance?).
+
+* RSpec makes it easy to re-run failing tests by printing out the line numbers of the failed test. If a test gets refactored, though, all the line numbers change which breaks the call to a specific line.
+
+* RSpec's DSL lends itself well to BDD
+
+* Minitest has two DSLs (assertive vs BDD)
+
+* RSpec output is coloured; Minitest output is not. But there's a gem for that.
+
+* Minitest ships with Rails, but the docs for each recommend different naming & test-writing conventions...?
+
+
+## Building a Rails app
+
+* `rails new` creates app foundation
+* `rails db:setup` initializes database/s
+* `rails g migration` & `rails db:migrate` sets up db tables
+* `rails g model` creates models
+* `rails g controller` creates controllers (which take care of actions/routes: `new` creates, `update` edits, etc)
+* seed data primes the database for testing (and demoing).
