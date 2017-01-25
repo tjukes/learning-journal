@@ -186,3 +186,46 @@ Please visit https://rvm.io/integration/gnome-terminal/ for an example.
 * `rails g model` creates models
 * `rails g controller` creates controllers (which take care of actions/routes: `new` creates, `update` edits, etc)
 * seed data primes the database for testing (and demoing).
+
+
+-------------------------
+
+## Testing
+
+For now, Rails 5 (API-specific if possible), Ruby 2.3.1, Minitest
+http://edgeguides.rubyonrails.org/testing.html
+
+* Test stubs are automatically generated with `rails g model (...)`
+* Tests are stored in the `test` directory by default, which corresponds to the app's file directory
+* "Test cases" and "tests": the class `Minitest::Test` is the superclass of `ActiveSupport::TestCase`. Anything that inherits from the ActiveSupport class is a "test case". More simply named "tests" are methods defined in classes that inherit directly from the Minitest class, that have names starting with `test_` (eg, `test_valid_password`). These will be run automatically when the test case is run.
+  * Note - two different options for defining tests:
+      ```
+      test "the truth"
+          assert true
+      end
+      ```
+    is the same as
+      ```
+      def test_the_truth
+          assert true
+      end
+      ```
+* The assertion part validates an object or expression for expected results: http://edgeguides.rubyonrails.org/testing.html#available-assertions, http://edgeguides.rubyonrails.org/testing.html#rails-specific-assertions
+* When printing test results, framework-related parts of the stack trace are not shown by default. Use the `-b` flag to display them: `bin/rails -b test/models/some_test.rb`
+* Can run all tests (`bin/rails test`), tests in a specific directory (`bin/rails test test/models`), or a specific test file or a single specific test by specifying the line number in the file
+* For help: `bin/rails test -h`
+* Fixtures: sample data for testing, **vs** seed data - real data that persists to the database (eg the first admin account needed to manage the app).
+  * Fixture stubs are created when Rails generates a model.
+  * One fixture file per model.
+  * Written in YAML.
+  * They're cool.
+  * Can use ERB when writing fixtures, for example to generate a thousand users at a time without writing out 1000 identities.
+  * Fixtures are instances of Active Record. Can access the object directly - scope local to test case.
+  * Deets here:  http://edgeguides.rubyonrails.org/testing.html#the-low-down-on-fixtures
+* "Integration testing": testing the flow-through of the app - eg, sending a GET request to a route and checking for a success response and/or specific content on the page; sending a POST request, following the redirect, and checking to see that the new content is on the follow-up page.
+* "Functional tests" for controllers: test how they handle incoming requests and that they respond appropriately. Test stubs are created when running `rails generate scaffold_controller (...)`
+  * Hashes available after a request processed: `flash`, `cookies`, `session`
+  * Instance variables available: `@controller` that is processing the request, the `@request` object, the `@response` object
+  * Can create test helpers, eg login helper
+* Testing routes - no details in main guide, find at http://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html
+*
