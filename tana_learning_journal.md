@@ -197,6 +197,8 @@ http://edgeguides.rubyonrails.org/testing.html
 
 *NOTE: Testing philosophies are a controversial part of programming. DHH now advocates for system testing instead of dogmatic unit testing TDD. Most seem to agree that your testing practices should help you write better code and build better applications; different philosophies will help some people with their workflow/thinking flow more than others...*
 
+*Test things that are likely to break. Don't test things that are likely to change (eg views). Test complex things. Test conditional things.*
+
 * Test stubs are automatically generated with `rails g model (...)`
 * Tests are stored in the `test` directory by default, which corresponds to the app's file directory
 * "Test cases" and "tests": the class `Minitest::Test` is the superclass of `ActiveSupport::TestCase`. Anything that inherits from the ActiveSupport class is a "test case". More simply named "tests" are methods defined in classes that inherit directly from the Minitest class, that have names starting with `test_` (eg, `test_valid_password`). These will be run automatically when the test case is run.
