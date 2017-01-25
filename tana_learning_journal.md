@@ -195,6 +195,8 @@ Please visit https://rvm.io/integration/gnome-terminal/ for an example.
 For now, Rails 5 (API-specific if possible), Ruby 2.3.1, Minitest
 http://edgeguides.rubyonrails.org/testing.html
 
+*NOTE: Testing philosophies are a controversial part of programming. DHH now advocates for system testing instead of dogmatic unit testing TDD. Most seem to agree that your testing practices should help you write better code and build better applications; different philosophies will help some people with their workflow/thinking flow more than others...*
+
 * Test stubs are automatically generated with `rails g model (...)`
 * Tests are stored in the `test` directory by default, which corresponds to the app's file directory
 * "Test cases" and "tests": the class `Minitest::Test` is the superclass of `ActiveSupport::TestCase`. Anything that inherits from the ActiveSupport class is a "test case". More simply named "tests" are methods defined in classes that inherit directly from the Minitest class, that have names starting with `test_` (eg, `test_valid_password`). These will be run automatically when the test case is run.
@@ -228,4 +230,3 @@ http://edgeguides.rubyonrails.org/testing.html
   * Instance variables available: `@controller` that is processing the request, the `@request` object, the `@response` object
   * Can create test helpers, eg login helper
 * Testing routes - no details in main guide, find at http://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html
-*
