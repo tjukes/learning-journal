@@ -218,7 +218,7 @@ http://edgeguides.rubyonrails.org/testing.html
 * When printing test results, framework-related parts of the stack trace are not shown by default. Use the `-b` flag to display them: `bin/rails -b test/models/some_test.rb`
 * Can run all tests (`bin/rails test`), tests in a specific directory (`bin/rails test test/models`), or a specific test file or a single specific test by specifying the line number in the file
 * For help: `bin/rails test -h`
-* Fixtures: sample data for testing, **vs** seed data - real data that persists to the database (eg the first admin account needed to manage the app).
+* **Fixtures:** sample data for testing, **vs** seed data - real data that persists to the database (eg the first admin account needed to manage the app).
   * Fixture stubs are created when Rails generates a model.
   * One fixture file per model.
   * Written in YAML.
@@ -245,4 +245,18 @@ http://edgeguides.rubyonrails.org/testing.html
   * **Rebasing:** For cleaning up history. Eg:
     * Feature branch was created a while ago but not finished, master has advanced a lot --> rebase to replay old commits of feature branch on top of updated master before continuing to work on feature branch.
     * Local branch (not pushed to remote) has messy history --> rebase to clean it up before merging or pushing to remote. Squash, reorder, split, remove, reword, fixup, etc. Do this to keep the history readable and useful, rather than blindly keeping everything out of paranoia.
-* **Commit messages:** Lots of guidelines out there (http://chris.beams.io/posts/git-commit/, https://www.git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project#Commit-Guidelines); most importantly, be aware of the guidelines for each project (or organization). 
+* **Commit messages:** Lots of guidelines out there (http://chris.beams.io/posts/git-commit/, https://www.git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project#Commit-Guidelines); most importantly, be aware of the guidelines for each project (or organization).
+
+* **Introducing other people to Git:**
+  * TODO: Find good resources that are accessible, are useful & actionable (have commands/instructions), point people in the right direction (don't include bad practices), and do a good job of highlighting the importance of git
+  * Resources so far:
+  * Jen's git diagram from LHL: good for initial setup, doesn't touch on process after repo setup
+  * git-scm book: excellent excellent... but quite detailed, not necessarily an easily accessible/persuasive starter piece
+  * The Simple Guide - No Deep Shit: not bad as a reference for commands, but not good re actual use practices
+  * William's "Git Rules" summary from LHL - not bad, needs context & explanation (ie not a starter):
+    - *One thing per commit*
+    - *Commit messages explain what, why, and what it means (no such thing as too much explanation)*
+    - *No fixup commits (use amend or interactive rebase)*
+    - *Descriptively named feature branches*
+    - *Code goes into master via pull requests*
+    - *Pull requests get code reviewed and _closed_ (not edited) if they aren't up to snuff"*
