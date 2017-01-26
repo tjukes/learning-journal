@@ -232,3 +232,17 @@ http://edgeguides.rubyonrails.org/testing.html
   * Instance variables available: `@controller` that is processing the request, the `@request` object, the `@response` object
   * Can create test helpers, eg login helper
 * Testing routes - no details in main guide, find at http://api.rubyonrails.org/classes/ActionDispatch/Assertions/RoutingAssertions.html
+
+
+-------------------------
+
+## 24-01-2017 Git mastery
+
+* **Merging vs rebasing:**
+  * Good explanation - summary points follow:  https://medium.com/@porteneuve/getting-solid-at-git-rebase-vs-merge-4fa1a48c53aa#.kfyo9dzcd
+  * **Merging** defaults to `ff`: if no changes have been made on master, the HEAD pointer is simply moved to the latest commit of the branch being merged in. It becomes as if there never was a separate branch. //According to the article, this is good for quick fixes that don't really need to have a standalone branch documenting their history for eternity. NOT GOOD for feature branches that add a coherent group of commits: this is the kind of history you do want to keep (similar effect to pull requests).
+  * Can merge with `--no-ff` to force git to keep the branch history. Also creates a separate merge commit with its own commit message.
+  * **Rebasing:** For cleaning up history. Eg:
+    * Feature branch was created a while ago but not finished, master has advanced a lot --> rebase to replay old commits of feature branch on top of updated master before continuing to work on feature branch.
+    * Local branch (not pushed to remote) has messy history --> rebase to clean it up before merging or pushing to remote. Squash, reorder, split, remove, reword, fixup, etc. Do this to keep the history readable and useful, rather than blindly keeping everything out of paranoia.
+* **Commit messages:** Lots of guidelines out there (http://chris.beams.io/posts/git-commit/, https://www.git-scm.com/book/en/v2/Distributed-Git-Contributing-to-a-Project#Commit-Guidelines); most importantly, be aware of the guidelines for each project (or organization). 
