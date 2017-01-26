@@ -259,4 +259,15 @@ http://edgeguides.rubyonrails.org/testing.html
     - *No fixup commits (use amend or interactive rebase)*
     - *Descriptively named feature branches*
     - *Code goes into master via pull requests*
-    - *Pull requests get code reviewed and _closed_ (not edited) if they aren't up to snuff"*
+    - *Pull requests get code reviewed and _closed_ (not edited) if they aren't up to snuff*
+
+
+## Model testing
+
+> To get started, a model spec should include tests for the following:
+>
+> - the default factory should generate a valid object (more on factories in just a moment)
+> - data that fail validations should not be valid
+> - class and instance methods perform as expected
+>
+> Source: https://everydayrails.com/2012/03/19/testing-series-rspec-models-factory-girl.html
