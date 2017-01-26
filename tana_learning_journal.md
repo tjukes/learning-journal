@@ -271,3 +271,15 @@ http://edgeguides.rubyonrails.org/testing.html
 > - class and instance methods perform as expected
 >
 > Source: https://everydayrails.com/2012/03/19/testing-series-rspec-models-factory-girl.html
+
+
+## Single table inheritance / STI
+
+Idea: a quick google suggests that this structure may be more common (and maybe mroe useful?) than implied by some during our LHL final project. I can use the rewrite as an opportunity to learn more about what it really involves - when is it truly a good/bad idea, what becomes more complicated, what becomes simpler/more functional/more efficient, what are the best practices.
+
+A couple starting points:
+- http://stackoverflow.com/questions/tagged/single-table-inheritance
+- http://stackoverflow.com/questions/4507149/best-practices-to-handle-routes-for-sti-subclasses-in-rails
+- http://stackoverflow.com/questions/15853334/rails-create-scaffold-for-models-to-inherit-from-superclass
+- http://stackoverflow.com/questions/604870/can-i-do-sti-and-still-use-polymorphic-path-helpers/605172#605172
+- http://stackoverflow.com/questions/555668/single-table-inheritance-and-where-to-use-it-in-rails
