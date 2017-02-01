@@ -283,3 +283,59 @@ A couple starting points:
 - http://stackoverflow.com/questions/15853334/rails-create-scaffold-for-models-to-inherit-from-superclass
 - http://stackoverflow.com/questions/604870/can-i-do-sti-and-still-use-polymorphic-path-helpers/605172#605172
 - http://stackoverflow.com/questions/555668/single-table-inheritance-and-where-to-use-it-in-rails
+
+
+-------------------------
+
+## Computer info & upgrading
+
+* Upgrading SSD:
+  * Get an **M.2 42mm SSD**
+  * MyDigitalSSD - problems with firmware versions 1.5 & 1.6 fixed now?
+  * Transcend
+  * ZTC
+
+* Command to find processor: `cat /proc/cpuinfo | grep 'model name' | uniq`
+  * Chilo has: `model name	: Intel(R) Celeron(R) 2957U @ 1.40GHz`
+  * "The CPU in the C720 Celeron is at the high end of standard Chromebook options" - https://www.reddit.com/r/GalliumOS/comments/5k7ek2/looking_for_a_highly_portal_laptop_with_crazy/dbm9q0u/
+
+
+-------------------------
+
+## 31-01-2017 Ruby reminders
+
+* Initializing multiple variables on the same line:
+  * `foo = bar = "this string"`: works, but both variables will point to the same memory address (`foo.object_id` is identical to `bar.onject_id`)
+  * `foo, bar = 0, 1`: works; make sure to assign a value to every variable - if `foo, bar = 0`, then `foo` will be initialized (as 0) but not `bar` (will be `nil`)
+* Ranges:
+  * `1..5` means 1, 2, 3, 4, 5 (two dots .. includes start and end points of range)
+  * `1...5` means 1, 2, 3, 4 (three dots ... includes start point but excludes end point)
+* `Prime`: the set of all prime numbers
+* Array methods:
+  * `.transpose`: assumes 'self' is an array of arrays, and transposes the 'rows' and 'columns' - `[[1, 2], [23, 12], [58, 90]]` becomes `[[1, 23, 58], [2, 12, 90]]`
+  * `.zip`: http://apidock.com/ruby/Array/zip
+
+
+## Currying
+
+Breaking down a function that takes multiple arguments into a series of functions that each take one argument -  http://stackoverflow.com/a/36321/5500952. Excellent explanation halfway down this article (https://www.sitepoint.com/functional-programming-techniques-with-ruby-part-ii/), after explanation of methods blocks procs lambdas (see notes below)
+
+* **Partial function application** differs from currying: calling a function with some number of arguments, in order to get a function back that will take that many fewer arguments
+
+* `Proc#curry` curries a function for you:
+  * define a function `first_func` taking multiple arguments (eg lambda)
+  * then create a new function that takes the first argument expected by `first_func`: `second_func = first_func.curry(pass_arg_here)`
+
+* Methods, blocks, procs, and lambdas: https://www.sitepoint.com/functional-programming-techniques-with-ruby-part-ii/
+  * All four are really variations of procs (syntactic sugar for procs, or can be made to behave like procs):
+    * methods are not really meant (?) to be passed around
+    * blocks are but in a limited way - they aren't named
+    * procs can be named and easily passed around
+    * lambdas have two specific differences - see next points
+  * Lambdas check the arguments they are given (ArgumentError if given one, expecting two)
+  * Lambdas containing a `return` statement will not cause the method calling the lambda to return. Procs will.
+  * Procs are tied to the scope they're created in - they will still have access to local variables even when they are called somewhere else. 
+
+* **Higher order functions** do one of the following:
+  * Accept a function as an argument
+  * Return a function as a return value
