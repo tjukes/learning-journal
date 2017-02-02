@@ -334,8 +334,39 @@ Breaking down a function that takes multiple arguments into a series of function
     * lambdas have two specific differences - see next points
   * Lambdas check the arguments they are given (ArgumentError if given one, expecting two)
   * Lambdas containing a `return` statement will not cause the method calling the lambda to return. Procs will.
-  * Procs are tied to the scope they're created in - they will still have access to local variables even when they are called somewhere else. 
+  * Procs are tied to the scope they're created in - they will still have access to local variables even when they are called somewhere else.
 
 * **Higher order functions** do one of the following:
   * Accept a function as an argument
   * Return a function as a return value
+
+
+-------------------------
+
+## 01-02-2017 Dev setup recovery
+
+*Less of an explanation of what was learned, than a reminder of what was done...*
+
+* Replaced RVM with rbenv
+  * Remember why: configuration/setup/ongoing use of RVM was troublesome and complicated -- not necessarily impossible, just seemed like maybe more of a headache than it was worth. This switch is an experiment. I can always go back to RVM`
+  * RVM removal process: `rvm implode` and then manually remove mention of RVM from allll the dotfiles: .bashrc, .bash_profile, .profile, .zshrc, .zlogin, AND MORE -- needed to check them all
+  * rbenv installation process documented in the setup script on Github
+
+
+* Advanced the dev setup recovery "script" a few steps:
+  * Made copies of important dotfiles / config files: not sure if I got everything, but hopefully the key pieces. Should check again before wiping computer.
+  * Made copies manually, committing to repo on Github instead of initializing locally.
+  * **Previous point prompted the search that was finally effective! RECONSIDER THIS STRATEGY in light of the following:**
+    * http://blog.smalleycreative.com/tutorials/using-git-and-github-to-manage-your-dotfiles/
+    * http://dotfiles.github.io/
+  * Added a few more details & tidbits to the central "script" (not really a script yet, mostly a scratchpad with reminders and a few commands)
+
+
+## Continuing with Pedalspacecadet
+
+*Same type of entry as above...*
+
+Went ahead and started trying to write tests along with the models I was writing. More challenging than anticipated:
+* Needed to re-install gemset (and first re-install bundler) after the rvm-to-rbenv adventure
+* Forgot that when creating the Cyclist & Mechanic, if using `rails g scaffold`, migrations would be created: bad; both these models should talk to the User table and not have their own
+* Encountered a strange error in AR when trying to run the basic tests (a simple one I wrote plus all the stock ones): `ActiveRecord::RecordNotUnique: PG::UniqueViolation: ERROR:  duplicate key value violates unique constraint "users_pkey"` for each of the 16 tests. *To be continued...*
