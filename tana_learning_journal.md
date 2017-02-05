@@ -370,3 +370,18 @@ Went ahead and started trying to write tests along with the models I was writing
 * Needed to re-install gemset (and first re-install bundler) after the rvm-to-rbenv adventure
 * Forgot that when creating the Cyclist & Mechanic, if using `rails g scaffold`, migrations would be created: bad; both these models should talk to the User table and not have their own
 * Encountered a strange error in AR when trying to run the basic tests (a simple one I wrote plus all the stock ones): `ActiveRecord::RecordNotUnique: PG::UniqueViolation: ERROR:  duplicate key value violates unique constraint "users_pkey"` for each of the 16 tests. *To be continued...*
+
+
+-------------------------
+
+## Testing
+
+Points from https://semaphoreci.com/blog/2014/01/14/rails-testing-antipatterns-fixtures-and-factories.html
+
+* Fixtures vs factories: fixtures are apparently not so cool.
+  * Factory Girl (with RSpec) lets you create test data within the tests. With fixtures, record-creation happens in a separate file: makes it hard to know why you are testing for what in any given test. Updates have to happen manually in two different places.
+  * Factories can create too much data / too many associations: calling one factory may silently create many associated records (eg, creating a comment on a post also creates the post). Beware creating too many extra records w factories just because you can. Also avoid adding unnecessary detail to records when testing them (eg, testing a user's name doesn't require the presence of a phone number)
+  * Fixtures bypass ActiveRecord when creating records: ie, model validations aren't called.
+  * Fixtures load records into db before tests are run: sometimes this is useful (accessing things already in db), sometimes it is not (in more complex situations, difficult to test specific situations when lots of data already present?)
+  * On the other hand, Factory Girl can be slower in tests that actually hit the db
+  
