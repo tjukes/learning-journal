@@ -384,4 +384,60 @@ Points from https://semaphoreci.com/blog/2014/01/14/rails-testing-antipatterns-f
   * Fixtures bypass ActiveRecord when creating records: ie, model validations aren't called.
   * Fixtures load records into db before tests are run: sometimes this is useful (accessing things already in db), sometimes it is not (in more complex situations, difficult to test specific situations when lots of data already present?)
   * On the other hand, Factory Girl can be slower in tests that actually hit the db
-  
+
+
+-------------------------
+
+## 05-02-2017 Pedalspacecadet: PG error (`PG::UniqueViolation`)
+
+* StackOverflow post has some extra details of the situation and what I've tried so far: http://stackoverflow.com/questions/42011612/postgres-rails-5-auto-assigning-primary-key-that-already-exists-during-testing
+
+* Have tried:
+  * ```
+    SELECT setval('users_id_seq', (SELECT max(id) FROM users));
+    ```
+    \- Run from direct connection with db (command sequence: `psql`, `\connect pedalspacecadet_test` (from memory, may not be exact))
+  * ```
+    ActiveRecord::Base.connection.tables.each do |t|
+      ActiveRecord::Base.connection.reset_pk_sequence!(t)
+    end
+    ```
+    \- Run from rails console (`bin/rails c test`)
+  * ```
+    -- Login to psql and run the following
+    -- What is the result?
+    SELECT MAX(id) FROM your_table;
+    -- Then run...
+    -- This should be higher than the last result.
+    SELECT nextval('your_table_id_seq');
+    -- If it's not higher... run this set the sequence last to your highest pid it.
+    -- (wise to run a quick pg_dump first...)
+    SELECT setval('your_table_id_seq', (SELECT MAX(id) FROM your_table));
+    -- if your tables might have no rows
+    -- false means the set value will be returned by the next nextval() call    
+    SELECT setval('your_table_id_seq', COALESCE((SELECT MAX(id)+1 FROM your_table), 1), false);
+    ```
+    \- Notes: second command resulted in a lower value; did not do a pg_dump (unnecessary to back up a test database esp before any tests are working); then ran the last command since the test database should have no rows
+  * Re-cloning the repo into a fresh dir, running bundle install and db:setup and re-running the tests: same error (expected)
+  * Connecting to psql and running `INSERT INTO ...` to create records: the proper IDs are assigned, in order.
+  * In rails console (`bin/rails c test`), running `User.create`: the proper IDs are assigned in order. Same with `User.new` (when record is saved).
+  * Adding a uniqueness validation to the User model for the `id` column. Seemed crazy; surprise, it didn't work.
+  * Replacing `.new` with `.create` in the test. No change.
+  * This version of resetting the sequence: https://wiki.postgresql.org/wiki/Fixing_Sequences. No change.
+
+
+* About PG sequences: http://www.neilconway.org/docs/sequences/
+
+
+* Trying more things: Created a "blank slate" testing app and have so far discovered:
+  * Tests run fine with no STI
+  * Tests run fine (in the blank slate app) with the Users table set up for STI (ie, first column is a `type` column), but error out as soon as the scaffolding is generated for the first sub-type. *Note, different error:* When the subclass is made to inherit from the superclass (ie, the model definition reads `class Snurk < User`), the errors change the familiar error (PG::UniqueViolation with 980190962 for primary key)
+  * Rails 5 notes:
+    * Deprecation warnings from using Rails 5 with Ruby 2.4.0 (Fixnum/Bignum deprecated) are fixed in Rails 5.0.2
+    * Can set a specific branch to get a gem from in gemfile like so: `gem 'rails', github: "rails/rails", branch: '5-0-stable'` -- this didn't work to pull down 5.0.2 yet though, maybe still too recent?
+
+
+* TO TRY:
+  * Use RSpec instead of Minitest
+  * Use Ruby 2.3 or 2.2
+  * Use Rails 4.x
