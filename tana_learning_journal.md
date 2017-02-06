@@ -427,11 +427,12 @@ Points from https://semaphoreci.com/blog/2014/01/14/rails-testing-antipatterns-f
 
 
 * About PG sequences: http://www.neilconway.org/docs/sequences/
+  * A 'sequence object'  is created for every field that needs an autoincrementing value -- a **serial** value: ie, every primary key (id). PG handles this automatically but it can be seen after running the migration (I think that's where I saw it).
 
 
 * Trying more things: Created a "blank slate" testing app and have so far discovered:
   * Tests run fine with no STI
-  * Tests run fine (in the blank slate app) with the Users table set up for STI (ie, first column is a `type` column), but error out as soon as the scaffolding is generated for the first sub-type. *Note, different error:* When the subclass is made to inherit from the superclass (ie, the model definition reads `class Snurk < User`), the errors change the familiar error (PG::UniqueViolation with 980190962 for primary key)
+  * Tests run fine (in the blank slate app) with the Users table set up for STI (ie, first column is a `type` column), but error out as soon as the scaffolding is generated for the first sub-type. (*Note, different error:* `ActiveRecord::StatementInvalid: PG::UndefinedTable: ERROR:  relation "snurks" does not exist` makes sense because yb default, a model is expected to have its own table in the db). When the subclass is made to inherit from the superclass (ie, the model definition reads `class Snurk < User`), the errors change the familiar error (PG::UniqueViolation with 980190962 for primary key)
   * Rails 5 notes:
     * Deprecation warnings from using Rails 5 with Ruby 2.4.0 (Fixnum/Bignum deprecated) are fixed in Rails 5.0.2
     * Can set a specific branch to get a gem from in gemfile like so: `gem 'rails', github: "rails/rails", branch: '5-0-stable'` -- this didn't work to pull down 5.0.2 yet though, maybe still too recent?
