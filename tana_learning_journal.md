@@ -393,19 +393,22 @@ Points from https://semaphoreci.com/blog/2014/01/14/rails-testing-antipatterns-f
 * StackOverflow post has some extra details of the situation and what I've tried so far: http://stackoverflow.com/questions/42011612/postgres-rails-5-auto-assigning-primary-key-that-already-exists-during-testing
 
 * Have tried:
-  * . ```
+  * .
+    ```
     SELECT setval('users_id_seq', (SELECT max(id) FROM users));
     ```
     \- Run from direct connection with db (command sequence: `psql`, `\connect pedalspacecadet_test` (from memory, may not be exact))
 
-  * . ```
+  * .
+    ```
     ActiveRecord::Base.connection.tables.each do |t|
       ActiveRecord::Base.connection.reset_pk_sequence!(t)
     end
     ```
     \- Run from rails console (`bin/rails c test`)
 
-  * . ```
+  * .
+    ```
     -- Login to psql and run the following
     -- What is the result?
     SELECT MAX(id) FROM your_table;
