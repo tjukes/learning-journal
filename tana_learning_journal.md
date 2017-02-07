@@ -393,21 +393,19 @@ Points from https://semaphoreci.com/blog/2014/01/14/rails-testing-antipatterns-f
 * StackOverflow post has some extra details of the situation and what I've tried so far: http://stackoverflow.com/questions/42011612/postgres-rails-5-auto-assigning-primary-key-that-already-exists-during-testing
 
 * Have tried:
-  * .
+  * Ran from direct connection with db (command sequence: `psql`, `\connect pedalspacecadet_test` (from memory, may not be exact)):
     ```
     SELECT setval('users_id_seq', (SELECT max(id) FROM users));
     ```
-    \- Run from direct connection with db (command sequence: `psql`, `\connect pedalspacecadet_test` (from memory, may not be exact))
 
-  * .
+  * Ra:n from rails console (`bin/rails c test`)
     ```
     ActiveRecord::Base.connection.tables.each do |t|
       ActiveRecord::Base.connection.reset_pk_sequence!(t)
     end
     ```
-    \- Run from rails console (`bin/rails c test`)
 
-  * .
+  * Notes: second command resulted in a lower value; did not do a pg_dump (unnecessary to back up a test database esp before any tests are working); then ran the last command since the test database should have no rows
     ```
     -- Login to psql and run the following
     -- What is the result?
@@ -422,7 +420,6 @@ Points from https://semaphoreci.com/blog/2014/01/14/rails-testing-antipatterns-f
     -- false means the set value will be returned by the next nextval() call    
     SELECT setval('your_table_id_seq', COALESCE((SELECT MAX(id)+1 FROM your_table), 1), false);
     ```
-    \- Notes: second command resulted in a lower value; did not do a pg_dump (unnecessary to back up a test database esp before any tests are working); then ran the last command since the test database should have no rows
 
   * Re-cloning the repo into a fresh dir, running bundle install and db:setup and re-running the tests: same error (expected)
   * Connecting to psql and running `INSERT INTO ...` to create records: the proper IDs are assigned, in order.
