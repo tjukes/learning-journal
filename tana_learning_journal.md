@@ -398,7 +398,7 @@ Points from https://semaphoreci.com/blog/2014/01/14/rails-testing-antipatterns-f
     SELECT setval('users_id_seq', (SELECT max(id) FROM users));
     ```
 
-  * Ra:n from rails console (`bin/rails c test`)
+  * Ran from rails console (`bin/rails c test`)
     ```
     ActiveRecord::Base.connection.tables.each do |t|
       ActiveRecord::Base.connection.reset_pk_sequence!(t)
