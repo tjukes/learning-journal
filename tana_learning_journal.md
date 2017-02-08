@@ -445,3 +445,32 @@ Points from https://semaphoreci.com/blog/2014/01/14/rails-testing-antipatterns-f
   * Use RSpec instead of Minitest
   * Use Ruby 2.3 or 2.2
   * Use Rails 4.x
+
+
+-------------------------
+
+## 07-02-2017 Pedalspacecadet: PG error (`PG::UniqueViolation`)
+
+**What I have learned about this error so far:**
+* Created a 'blank slate' app to investigate possible causes/factors: https://github.com/tjukes/test_app
+* The error appears when running default Minitest tests, but not RSpec
+* None of the standard solutions for resetting the pg sequence worked to get rid of the error in Minitest
+
+In summary, it seems like this kind of error is not unheard of (pg sequences can get discombobulated), but there must be something else going on here. It may be specific to the particular combo of Rails 5.0.1 (API) / Minitest / Ruby 2.4.0.
+For the time being, I think I have reached the point of diminishing returns in trying to tackle this bug on my own, so I am switching to RSpec.
+
+
+## Pedalspacecadet: RSpec switch-in
+
+* Changing "master" history to incorporate RSpec from the beginning:
+  * Not sure if this is the greatest idea, but it's an interesting way to keep experimenting with git
+  * Make an 'rspec' branch from some point in history that makes sense (eg, before migrations & models have been created) and get rspec set up
+  * Swap rspec branch and master branch, so that current work on master is more of a sideshoot/feature. Ways to do this (at least two):
+    * Change base/defualt branch from master to rspec (github); rename master to minitest_feature_branch (local then update remote); rename rspec to master (same)
+    * Use the *'ours' merge strategy*: `git merge -s ours obsolete_branch` effectively overwrites obsolete_branch with whatever branch you are on
+
+*Current state of affairs...*
+- The `rspec_setup` branch is effectively master: rspec has been set up; next step is setting up models migrations etc
+- Creating 'feature branches' to add each round of scaffolding, instead of branches for migrations, models, etc. The "don't commit failing tests" rule means that all the auto-generated tests from `g scaffold` need to be dealt with before a clean commit can be made. Maybe commit the scaffold pieces in patches?
+- **Current priority:** working on branch `users_setup`, scaffold has been generated, need to deal with tests
+- A few branches can probably be deleted: models, better_models, migrations, etc from round one of app setup. All this work will be duplicated.
