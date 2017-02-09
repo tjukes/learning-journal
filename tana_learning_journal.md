@@ -474,3 +474,12 @@ For the time being, I think I have reached the point of diminishing returns in t
 - Creating 'feature branches' to add each round of scaffolding, instead of branches for migrations, models, etc. The "don't commit failing tests" rule means that all the auto-generated tests from `g scaffold` need to be dealt with before a clean commit can be made. Maybe commit the scaffold pieces in patches?
 - **Current priority:** working on branch `users_setup`, scaffold has been generated, need to deal with tests
 - A few branches can probably be deleted: models, better_models, migrations, etc from round one of app setup. All this work will be duplicated.
+
+*Update, 08-02-2017*
+- Branch 'rspec_setup' is still effectively master; branch 'users_setup' is still where current work is happening. Use this branch to set up users (base class) and cyclists and mechanics.
+- New strategy: don't generate scaffolds. Better idea to write everything from scratch until I'm sure of what I want and don't want from scaffold generation. Instead, run `rails g model` w all column names & types: this creates the migration, the model file, the spec file, and the factory.  
+- ...This means writing all tests by hand from scratch:
+  - https://www.relishapp.com/rspec/rspec-rails/docs/model-specs
+  - http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md
+  - file:///home/tanaryder/Documents/Rails%204%20in%20Action%20-%20CHAPTER3.pdf
+  - https://everydayrails.com/2012/03/19/testing-series-rspec-models-factory-girl.html
