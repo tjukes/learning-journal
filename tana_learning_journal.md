@@ -483,3 +483,26 @@ For the time being, I think I have reached the point of diminishing returns in t
   - http://www.rubydoc.info/gems/factory_girl/file/GETTING_STARTED.md
   - file:///home/tanaryder/Documents/Rails%204%20in%20Action%20-%20CHAPTER3.pdf
   - https://everydayrails.com/2012/03/19/testing-series-rspec-models-factory-girl.html
+
+
+-------------------------
+
+## 09-02-2017 Tidbits - wrapping up before OS reinstall
+
+Useful shortcuts I am using:
+- `gd` = git diff
+- `gapa` = git add --patch
+- `gdca` = git diff --cached (shows currently staged changes)
+- `alias | grep '...'` search aliases for '...'
+Today I practiced patch commits! Good tool for doing things in an order that makes sense / is easy for me, then committing in an order that makes sense for the commit history.
+
+FactoryGirl:
+- Difference between `build()` and `create()`: `create` persists an instance of a model to the db; `build` does not. Note, this is a place where RSpec skipping AR validations is apparent: writing a spec to confirm that a user is invalid without a first name, for example, will result in a db error if `create` is used (it gets in without being stopped by the AR validation) but will pass if `build` is used (the spec checks the validation and is happy that the nameless user is declared invalid).
+
+Git `bisect`:
+- https://git-scm.com/docs/git-bisect
+- "Use binary search to find the commit that introduced a bug" or any particular change: enter a 'good' and 'bad' commit id, or an 'old' (before change) and 'new' (after change). It will pick a commit in between and let you inspect it to determine if it is 'good'/'bad' or 'old'/'new'. Then it picks another. Then another. etc: narrows in on the one where it was introduced.
+
+STI with Rails model generator:
+- https://github.com/rails/rails/blob/master/railties/lib/rails/generators/rails/model/USAGE (linked from http://railsguides.net/advanced-rails-model-generators/)
+- Running `rails g model Snurk --parent User` will create a Snurk class that inherits from User, in an STI setup.
