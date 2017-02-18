@@ -506,3 +506,21 @@ Git `bisect`:
 STI with Rails model generator:
 - https://github.com/rails/rails/blob/master/railties/lib/rails/generators/rails/model/USAGE (linked from http://railsguides.net/advanced-rails-model-generators/)
 - Running `rails g model Snurk --parent User` will create a Snurk class that inherits from User, in an STI setup.
+
+
+------------------------
+
+## 17-02-2017 Back on the train
+
+Docker
+* Docker allows the creation and sharing of *images* that are run in *containers*: "An image is a filesystem and parameters to use at runtime. It doesn’t have state and never changes. A container is a running instance of an image." - https://docs.docker.com/engine/getstarted/step_two/
+* Installed Docker today. Goal: use Stembolt's Docker image for the Battlesnake server to experiment with while our team builds our snake.
+
+Git
+* Re submodules: complicated, probably a bad idea to use. Based on skimming this briefly:  https://codingkilledthecat.wordpress.com/2012/04/28/why-your-company-shouldnt-use-git-submodules/
+
+NodeJS
+* Started playing with the very basics - write a simple javascript program, run it with node. Learned a couple neat things...
+* Running `node someProgram.js` with options, eg:
+  * `-c, --check` checks the program's syntax without actually running it.
+  * `-e, --eval "script"` tells node to evaluate the following argument ("script") as javascript
