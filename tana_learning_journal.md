@@ -524,3 +524,60 @@ NodeJS
 * Running `node someProgram.js` with options, eg:
   * `-c, --check` checks the program's syntax without actually running it.
   * `-e, --eval "script"` tells node to evaluate the following argument ("script") as javascript
+
+
+------------------------
+
+## 18-02-2017 JS review & Node intro notes
+
+**Scope and what \`this\` is**
+* `this` refers to the context from which a function is called. Eg:
+  * `function test_this() { return this; }` returns the global object (or window object in the browser)
+* `.call()` allows you to set the value of `this`: `someFunction.call(thisIsTheThisObject, someArg)` will run `someFunction()` with `someArg`, but the value of `this` within the function's execution context will be changed to `thisIsTheThisObject`
+* `.call()` executes the function immediately
+* `.apply()` works the same way as call, but the arguments passed to the called function (`someArg`) can be an array
+* `.bind()` works like the previous two, but returns a function instead of the *result of calling a function*. Means that a new function can be defined which is a 'bound' version of another function, allowing it to be called with whichever `this` value you like from any context. See last couple paragraphs of source article for more detail.
+
+Source: http://www.digital-web.com/articles/scope_in_javascript/
+
+**Closure**
+* *A closure* is a function that "closes over" some local variables (and saves them for later use). The concept of *closure* is the ability to do this - reference a specific instance of local variables in an enclosing function. (EloquentJS, ch3)
+
+**Testing**
+* Unit testing: test each tiny piece of code individually, independently, isolated from all other components. The idea is that if each small piece works, things should interact happily. Unit testing is supposed to help with writing better code - code that's better designed. Unit testing can underpin or be done along side other kinds of testing.
+  * Popular tools: Mocha, Jasmine, Tape
+* Integration testing: test how two or more pieces work together. Recommendation - have fewer integration tests than unit tests, only where you really need them (more complex to write and maintain).
+  * Usually same tools as for unit testing
+* Functional testing / E2E testing / browser testing: test complete funcitonality of some application. Typically work by mimicking a browser and then a user clicking through the app. Not a good idea to make them "too fine-grained" - this is not the place for that. Recommended if there are some tests that are repeatedly done manually inthe browser.
+  * Tools: Selenium, typically with Selenium WebDriver or Protractor; sometimes (also) with PhantomJS, CasperJS
+* Source for above: https://codeutopia.net/blog/2015/04/11/what-are-unit-testing-integration-testing-and-functional-testing/
+* Stubbing vs mocking, with jstest: http://jstest.jcoglan.com/mocking.html
+  * Stubbing: replace functions, objects, and methods with versions that return hardcoded results.
+  * Mocking: like stubbing, but verifies that certain methods are called during the test.
+* **Code coverage**: measures what percentage of a program's source code has been executed during testing. Based on *coverage criteria* (Wikipedia):
+  * Function coverage: has each function been called?
+  * Statement coverage: has each statement been executed?
+  * Branch coverage: has each branch of each control structure (eg, `if/else` or switch statements) been executed?
+  * Condition coverage / predicate coverage: has each Boolean sub-expression evaluated to both true and false?
+
+**Modules**
+* A module is a file that exports an object. Typically assigned to a variable in the importing file (eg, `var coolMath = require("./math-is-cool")`). Methods and values from the export can then accessed on the variable defined in the importing file (eg, `coolMath.PI`, `coolMath.showMeAGraph()`).
+* Modules define their exports with `module.exports = { ... }`. Properties/methods in the exports can also reference 'private' functions and values that are defined in the module, but not exported (closure).
+
+**Packages**
+* Published on npmjs.org or node-modules.com (or somewhere else)
+* To set up a package, run `npm init` inside a repo you've already set up: this command starts an interactive process to set up the `package.json` for the project. It "tries to use intelligent defaults", and will (for example) fill in the repo url automatically if run inside an initialised repo.
+* Packages do one thing (solve one problem). Extraneous functionalities should be split into their own packages.
+* Use semver. (Version must be parseable by https://github.com/isaacs/node-semver)
+
+**package.json**
+* All the good info (really, good): https://docs.npmjs.com/files/package.json
+* Basic project info: project name (required), version (required), author, description
+* Scripts section (key - `scripts`, value - object containing commands and aliases): exposes additional commands. The object assumes that the key is the npm command and the value is the script path.
+  * EG: `scripts: { start: "node server.js", test: "mocha --reporter spec test" }`
+  * `npm start` and `npm test` are special commands...
+  * Other commands defined in the scripts section have to be run by specifying `run`:
+    * If scripts section is `scripts: { do-foo: "node foo.js --cool-option" }`
+    * Run with `npm run do-foo`
+  * **npm runs the scripts by passing the line to `sh`** which means that commands can be combined the same way they can be on the command line.
+  * More details about the script section:  https://blog.jayway.com/2014/03/28/running-scripts-with-npm/
