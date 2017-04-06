@@ -617,3 +617,23 @@ To duplicate a repository without forking it, you can run a special clone comman
 https://help.github.com/articles/duplicating-a-repository/
 
 Use regex & vim to remove first 5 characters from every line: `:%s/^.\{5}//g`
+
+
+
+------------------------
+
+Updates to dev setup:
+
+Install Python & Django:
+  Download Miniconda - https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh
+  Run with bash:
+  `bash Desktop/Miniconda3-latest-Linux-x86_64.sh`
+  Follow prompts for install; copy lines added to .bashrc to .zshrc
+  `atom .bashrc`
+  `atom .zshrc`
+  Then:
+  `pip install -U pip # make sure to have an up-to-date pip`
+  `pip install psycopg2`
+  `pip install Django`
+Install postgres:
+  `sudo apt-get install postgresql`
