@@ -637,3 +637,20 @@ Install Python & Django:
   `pip install Django`
 Install postgres:
   `sudo apt-get install postgresql`
+
+
+PSQL NOTES:
+
+Create postgres user:
+  Switch to 'postgres' user:
+  `sudo -i -u postgres`
+  Create user - will prompt for username and superuser y/n (see `man createuser` for more options):
+  `createuser --interactive  # username_is_optional_here`
+  Create a databse with the same name as the new user (PG will expect it):
+  `createdb # username_just_created`
+  Switch back to reg user:
+  `exit` or `su tana`
+  NOTE if user just created does not have a Linux user, create one: `sudo adduser # username_here`
+  Can then access psql from new user:
+  `sudo -i -u new_username`
+  `psql` OR access a specific db `psql -d database_name`
