@@ -581,3 +581,39 @@ Source: http://www.digital-web.com/articles/scope_in_javascript/
     * Run with `npm run do-foo`
   * **npm runs the scripts by passing the line to `sh`** which means that commands can be combined the same way they can be on the command line.
   * More details about the script section:  https://blog.jayway.com/2014/03/28/running-scripts-with-npm/
+
+
+------------------------
+
+## 19-02-2017 Start Battlesnakin!
+
+**Docker:** install & setup seemed fine, but my computer doesn't have enough juice to run the image and do anything else. Too bad.
+
+**Heroku:**
+* Deployed starter snake to Heroku for the team to check the functionality of their Docker images with.
+* How to push a branch that is not `master` to `heroku/master`:
+  * `git push -f heroku local-topic-branch:refs/heads/master`
+  * in this case: `git push -f heroku experiments:refs/heads/master`
+* Sending a POST request to the Heroku app:
+  * `curl -X POST http://this-snake.herokuapp.com/start`
+  * `-X POST` makes it a post request
+  * Make sure to use the right route in the URL (`/start`, `/move`)
+  * `-F 'fieldname=value'` before the url allows extra information to be sent (eg, login info, game id, board state, etc)
+
+**Computer info:**
+* This command shows all computer specs `sudo lshw | less`
+* Shows memory in megabytes: `free -m`
+* Show other users on a local network (not all, eg phones): `arp`
+
+**Pathfinding:**
+*
+
+
+------------------------
+
+## Lessons learned from the Battlesnake process
+
+To duplicate a repository without forking it, you can run a special clone command, then mirror-push to the new repository.
+https://help.github.com/articles/duplicating-a-repository/
+
+Use regex & vim to remove first 5 characters from every line: `:%s/^.\{5}//g`
