@@ -654,3 +654,37 @@ Create postgres user:
   Can then access psql from new user:
   `sudo -i -u new_username`
   `psql` OR access a specific db `psql -d database_name`
+
+
+------------------------
+
+## 05-04-2017 AWS Elastic Beanstalk & DjangoREST API:
+
+- Downloaded the EB CLI
+- Set up our IAM keys
+- Ran `eb init` to initialize the repo with our keys (switching branches changes config -- need to explicitly tell next branch to use specific config or re-run `eb init`, but that will change the config to point to that branch)
+- Fixed up settings file in Django so environment variables were used throughout, and followed 12-Factor App guidelines
+- Tried to figure out what Hugh had done to set up EB
+
+
+**What we learned about EB:**
+- EB is a catch-all service that coordinates a collection of resources (doesn't cost anything - it's just a tool to manage Amazon resources, not a resource)
+  - Included resources:
+    - EC2 (computing power)
+    - RDS (database storage)
+    - S3 (persistent storage for files) (keeps copy of every version of code you upload to deploy)
+
+- "An Elastic Beanstalk application is a logical collection of Elastic Beanstalk components, including environments, versions, and environment configurations."
+  - Application version: specific labelled version of deployable code
+  - Environment: a currently deployed version (provisioned with resources needed)
+  - Environment configuration: parameters and settings that define how an environment and its associated resources behave
+
+- When deploying an EB environment, you choose an environment tier, platform, and environment type
+  - Environment tier is either "web server" or "worker"
+
+- Whitelisting IPs for SSHing: apparently Amazon recommends using an IP whitelist to restrict who is allowed to SSH in. This is an extra level of protection over the existing security of SSH. It works because even though IP addresses (for homes etc) are dynamic, they often end up staying the same for ~7mo (assigned for ~7 days, but when router 'renegotiates' the IP address from the ISP, it often takes the same one again)
+
+- **EB CLI**
+  - Git compatible: running `eb deploy` will deploy the latest commit by default. Can add an option to deploy from staging without committing if that's desired for some reason.
+
+- **Creating SSH keys**: Keys will be generated during the initial run of `eb init` (`ssh-keygen` must be installed & available from CLI). To create new keypairs after the initial run, use `eb init --interactive` (`-i`), then select Yes and Create New Keypair
