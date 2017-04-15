@@ -688,3 +688,34 @@ Create postgres user:
   - Git compatible: running `eb deploy` will deploy the latest commit by default. Can add an option to deploy from staging without committing if that's desired for some reason.
 
 - **Creating SSH keys**: Keys will be generated during the initial run of `eb init` (`ssh-keygen` must be installed & available from CLI). To create new keypairs after the initial run, use `eb init --interactive` (`-i`), then select Yes and Create New Keypair
+
+
+------------------------
+
+## 06-04-2017 Javascript ideas
+
+Notes from https://medium.com/javascript-scene/10-interview-questions-every-javascript-developer-should-know-6fa6bdf5ad95, not blindly copied and not in order
+
+Async programming:
+- Sync means code runs sequentially from top to bottom. Anything that takes a long time blocks the next thing until it's done.
+- Async uses an "event loop". When an otherwise blocking operation is needed, the request is started, the other code keeps running, and when the response is ready an "interrupt" is fired which triggers an event handler and control flow continues.
+- UIs are async by default (waiting for user input)
+- Node is async by default, accepting more incoming requests while the first is being handled
+
+Two-way data binding vs one-way data flow
+- Two-way data binding: UI fields are bound to model data so that when one changes, so does the other
+  - Angular
+- One-way data flow: model is the single source of truth; UI changes signal a user's "itent" but only the model has access to the app's state
+  - React
+- One-way can be easier to debug - only have to trace things in one direction
+
+ Object composition vs class inheritance:
+ - Use 'can-do', 'has-a', or 'uses-a' relationships instead of 'is-a'
+ - Classical inheritance controversial: can cause tight coupling, forced is-a relationships that end up being inflexible and not future-proof, 'gorilla banana' problem
+
+ Prototypal inheritance vs class inheritance:
+ - Prototypal inheritance: more flexible - inherit from a single object rather than a "blueprint" / description of a class
+ - There are several types of prototypal inheritance (prototype chain, mixins, functional ie re closure) -->> I don't understand this yet
+
+ FP vs OOP:
+ - (Mathematical) functions -- pass things around to avoid shared state and mutable data
