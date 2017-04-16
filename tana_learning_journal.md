@@ -736,3 +736,17 @@ Deploying a copy of the Dogwood BBM API to my own AWS account for testing purpos
 - Errors out the first time, needs env variables: maybe it would have worked if these had been set first?
 - `eb setenv KEY='VALUE' KEY='VALUE' KEY='VALUE'`
 - Need to create db (RDS) manually through web console (see Hugh's notes); make sure to update env variables with allowed hosts, db endpoint name, any others that have changed/been created
+
+
+------------------------
+
+## 16-04-2017 Aliases for changing terminal colours
+
+This may be a minor achievement, but I'm deriving a great deal of satisfaction from it. I typically change the colour settings on my terminal twice a day to deal with changing light levels, so these are long overdue.
+
+- Terminal settings for my terminal (XFCE) live in `.config/xfce4/terminal/terminalrc`
+- Display settings are on the lines starting with 'Color' or 'Background' (no surprises there)
+- Switch back and forth between the themes I like to see what changes; lucky me, only two lines
+- Figure out the bash command to make in-place changes to text files (`sed -i`)
+- Make an alias or two, save in `~/.oh-my-zsh/custom` and [gist it](https://gist.github.com/tjukes/af8fd45cea35ca2e13df8de7c080155f)
+- Add it to dev setup notes (to-do)
