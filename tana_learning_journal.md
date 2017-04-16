@@ -719,3 +719,20 @@ Two-way data binding vs one-way data flow
 
  FP vs OOP:
  - (Mathematical) functions -- pass things around to avoid shared state and mutable data
+
+
+------------------------
+
+## 14-04-2017 EB deployment
+
+**NOTE still not successful, just tracking steps here for reference an possibly eventually backtracking.**
+
+Deploying a copy of the Dogwood BBM API to my own AWS account for testing purposes:
+- Cloned the repo into a new directory
+- `rm -rf .git` to clear history/settings, then `git init`, then commit after making sure all the files are good (eg, .ebextensions/02_python.config still referred to bigmoney.setting_eb_staging; that needed to be changed to simply bigmoney.settings)
+- Get access keys for IAM user from EB web console
+- `eb init --profile [profilename]` to initialise the eb app with the right profile info (not sure if this worked, but just keep using the `--profile` flag everywhere for good measure)
+- `eb create --profile [profilename]` to create the environment
+- Errors out the first time, needs env variables: maybe it would have worked if these had been set first?
+- `eb setenv KEY='VALUE' KEY='VALUE' KEY='VALUE'`
+- Need to create db (RDS) manually through web console (see Hugh's notes); make sure to update env variables with allowed hosts, db endpoint name, any others that have changed/been created
