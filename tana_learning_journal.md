@@ -737,6 +737,13 @@ Deploying a copy of the Dogwood BBM API to my own AWS account for testing purpos
 - `eb setenv KEY='VALUE' KEY='VALUE' KEY='VALUE'`
 - Need to create db (RDS) manually through web console (see Hugh's notes); make sure to update env variables with allowed hosts, db endpoint name, any others that have changed/been created
 
+SOLUTION:
+- Cloned staging deployment to have a safe 'working copy' that was identical. Same errors, so...
+- SSH to figure things out: AWS only allows one keypair. Using that one keypair it's possible to SSH in and see what's going on.
+- Log file permissions error: the app was trying to write logs to a file that was owned by root (user 'wsgi' didn't have permission). Removing the logging config fixed it.
+- Update environment variables, `eb setenv KEY='VALUE' KEY='VALUE' KEY='VALUE' -e [environmentname] --profile [profilename]`
+- And then, `eb deploy` of the new code worked fine!
+
 
 ------------------------
 
